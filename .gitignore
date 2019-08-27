@@ -1,0 +1,8 @@
+*.ipynb_checkpoints/
+*.vscode
+env/*
+*.log
+*.egg-info
+*__pycache__/
+*.pyc
+torch
