@@ -5,12 +5,12 @@
 
 import tensorflow as tf
 
-from tf.keras.models import Sequential
-import tf.keras.layers as layers # import Keras Layers
-import tf.keras.optimizers as optimizers
+from tensorflow.keras.models import Sequential
+import tensorflow.keras.layers as layers # import Keras Layers
+import tensorflow.keras.optimizers as optimizers
 
 #Load data generator and preprocessing module
-from tf.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 #import os module
 import os
@@ -21,17 +21,18 @@ import numpy as np
 class CNN_model():
     
     # Initialize the class, with some default variables
-    def __init__(self, args=None):
+    def __init__(self, args=None, num_classes=0):
         """
             args = Argument parser from the options.py file
         """
         self.args = args
+        self.num_classes = num_classes
 
     # This function defines the CNN architecture
     def cnn_model(self):
         model = Sequential()
         model.add(layers.Conv2D(filters = 32, kernel_size = (3, 3), strides = 1, padding='same',
-                 input_shape=(self.args.b, self.args.img_h, self.args.img_w, self.args.num_channels)))
+                 input_shape=(self.args.img_h, self.args.img_w, self.args.num_channels)))
         model.add(layers.Activation('relu'))
         model.add(layers.Conv2D(64, (3, 3)))
         model.add(layers.Activation('relu'))
@@ -53,8 +54,12 @@ class CNN_model():
         model.add(layers.Dense(512))
         model.add(layers.Activation('relu'))
         model.add(layers.Dropout(0.5))
-        model.add(layers.Dense(10, activation='softmax'))
-        model.compile(optimizers.rmsprop(lr=0.0005, decay=1e-6),loss="categorical_crossentropy",metrics=["accuracy"])
+        model.add(layers.Dense(self.num_classes, activation='softmax'))
+        
+        # Model compile defines the otimizer and loss function to choose
+        model.compile(optimizers.RMSprop(lr=0.0005, decay=1e-6),loss="categorical_crossentropy",metrics=["accuracy"])
+        
+        # Generate the model Summary
         print("Model Details!")
         model.summary()
         return model
