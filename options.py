@@ -4,7 +4,7 @@ def parseArguments():
     # Creates argument parser
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--mode', help='Training or Testing/Inference modes', default="train", type=str)
+    parser.add_argument('--mode', help='train/continueTrain/test modes', default="train", type=str)
     # Path to the dataset Directory. It should have the below Folder Structure
 
     ################# Folder Structure:###########
@@ -32,7 +32,11 @@ def parseArguments():
     parser.add_argument('--input_dir', help='Path to the Dataset directory(DIR)', required=True)
 
     # Tensorflow Graph,Session,model based parametes
-    parser.add_argument('--save_dir', help='Path to save/load the trianed Models', default='./models')
+    parser.add_argument('--save_dir', help='Path to save the trained Models', default='./models')
+    parser.add_argument('--load_dir', help='Path to load the trained Models', default='./models')
+    parser.add_argument('--continue_train', help='Resumes the training from the latest checkpoint, mentioned in load_dir', action="store_true")
+    parser.add_argument('--model_save_format', help='save the model in tf or h5py format', default="tf", type=str)
+
 
     # Training Parameters
     parser.add_argument('--img_h', help='Image Height', type=int, default=512)
@@ -41,6 +45,7 @@ def parseArguments():
     parser.add_argument('-b', '--batch_size', help='Batch Size for training', type=int, default=1)
     parser.add_argument('--num_epochs', help='Number of Epochs to train the model for', type=int, default= 100)
     parser.add_argument('--early_stop', help='EarlyStopping, to avoid Overfitting duting training ', action='store_true')
+    parser.add_argument('--optimizer', help="Optimizer to Choose RMS or Adam", default="RMS", type=str)
 
     args = parser.parse_args()
     return args

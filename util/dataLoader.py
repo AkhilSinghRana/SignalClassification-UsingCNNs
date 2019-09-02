@@ -15,7 +15,7 @@ class DataLoader():
             raise NotADirectoryError
         
         else:
-            if self.args.mode == "train":
+            if self.args.mode == "train" or self.args.mode == "continueTrain":
                 train_dir = os.path.join(self.args.input_dir, "train")
                 val_dir = os.path.join(self.args.input_dir, "val")
                 if not (os.path.exists(train_dir) or os.path.exists(val_dir)):
@@ -35,8 +35,8 @@ class DataLoader():
                     
                     
                     # Create a data generator that generates the data on the fly with data augmentation
-                    train_image_gen = image_preprocessing.ImageDataGenerator(horizontal_flip= True)
-                    val_image_gen = image_preprocessing.ImageDataGenerator(horizontal_flip= True)
+                    train_image_gen = image_preprocessing.ImageDataGenerator(rescale=1./255, horizontal_flip= True)
+                    val_image_gen = image_preprocessing.ImageDataGenerator(rescale=1./255, horizontal_flip= True)
                     
                     # Data Generator with specific batch size from directory
                     print("Training Data Loader")
@@ -59,9 +59,26 @@ class DataLoader():
                                                     )
                     
                     return train_data_gen, val_data_gen
-            else:
+            
+            elif self.args.mode == "test":
                 test_dir = os.path.join(self.args.input_dir, "test")
                 print("Evaluation mode")
                 """"""""""""""""""""
                 ##### TODO Code
                 """"""""""""""""""""
+                test_image_gen = image_preprocessing.ImageDataGenerator(rescale=1./255, horizontal_flip= True)
+
+                #Create test data gen
+                test_data_gen = test_image_gen.flow_from_directory(directory=test_dir,
+                                                                         target_size = (self.args.img_h,self.args.img_w),
+                                                                         color_mode = "rgb",
+                                                                         batch_size = self.args.batch_size,
+                                                                         shuffle=True,
+                                                                         interpolation = "bicubic",
+                                                                         class_mode = "categorical"
+                                                                    )
+
+                return test_data_gen
+
+            else:
+                raise NotImplementedError
