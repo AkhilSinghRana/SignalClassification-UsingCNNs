@@ -65,10 +65,12 @@ def test(args):
 
 if __name__ == "__main__":
     args = options.parseArguments()
-
+    
     if args.mode=="train":
         train(args)
+
     elif args.mode=="continueTrain":
         continueTrain(args)
+
     elif args.mode=="test":
         test(args)

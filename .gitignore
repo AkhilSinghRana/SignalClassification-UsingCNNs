@@ -5,4 +5,9 @@ env/*
 *.egg-info
 *__pycache__/
 *.pyc
+
+# Remove The checkpoints
 models/*
+
+# Remove all dataset Images
+Datasets/*

@@ -42,7 +42,7 @@ class DataLoader():
                     print("Training Data Loader")
                     train_data_gen = train_image_gen.flow_from_directory(directory=train_dir,
                                                                          target_size = (self.args.img_h,self.args.img_w),
-                                                                         color_mode = "rgb",
+                                                                         color_mode = "grayscale",
                                                                          batch_size = self.args.batch_size,
                                                                          shuffle=True,
                                                                          interpolation = "bicubic",
@@ -51,7 +51,7 @@ class DataLoader():
                     print("Validation Data Loader")
                     val_data_gen = val_image_gen.flow_from_directory(directory=val_dir,
                                                                          target_size = (self.args.img_h,self.args.img_w),
-                                                                         color_mode = "rgb",
+                                                                         color_mode = "grayscale",
                                                                          batch_size = self.args.batch_size,
                                                                          shuffle=True,
                                                                          interpolation = "bicubic",
