@@ -63,9 +63,7 @@ class DataLoader():
             elif self.args.mode == "test":
                 test_dir = os.path.join(self.args.input_dir, "test")
                 print("Evaluation mode")
-                """"""""""""""""""""
-                ##### TODO Code
-                """"""""""""""""""""
+                
                 test_image_gen = image_preprocessing.ImageDataGenerator(rescale=1./255, horizontal_flip= True)
 
                 #Create test data gen
@@ -73,7 +71,7 @@ class DataLoader():
                                                                          target_size = (self.args.img_h,self.args.img_w),
                                                                          color_mode = "rgb",
                                                                          batch_size = self.args.batch_size,
-                                                                         shuffle=False,
+                                                                         shuffle=True,
                                                                          interpolation = "bicubic",
                                                                          class_mode = "categorical"
                                                                     )
