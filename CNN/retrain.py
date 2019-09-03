@@ -96,20 +96,20 @@ size and latency options.
 
 To use with TensorBoard:
 
-By default, this script will log summaries to /tmp/retrain_logs directory
+By default, this script will log summaries to ../retrain_logs directory
 
 Visualize the summaries with this command:
 
-tensorboard --logdir /tmp/retrain_logs
+tensorboard --logdir ../retrain_logs
 
 To use with Tensorflow Serving, run this tool with --saved_model_dir set
 to some increasingly numbered export location under the model base path, e.g.:
 
 ```bash
 python retrain.py (... other args as before ...) \
-    --saved_model_dir=/tmp/saved_models/$(date +%s)/
+    --saved_model_dir=../saved_models/$(date +%s)/
 tensorflow_model_server --port=9000 --model_name=my_image_classifier \
-    --model_base_path=/tmp/saved_models/
+    --model_base_path=../saved_models/
 ```
 """
 # pylint: enable=line-too-long
@@ -1176,13 +1176,13 @@ if __name__ == '__main__':
   parser.add_argument(
       '--output_graph',
       type=str,
-      default='/tmp/output_graph.pb',
+      default='./output_graph.pb',
       help='Where to save the trained graph.'
   )
   parser.add_argument(
       '--intermediate_output_graphs_dir',
       type=str,
-      default='/tmp/intermediate_graph/',
+      default='../intermediate_graph/',
       help='Where to save the intermediate graphs.'
   )
   parser.add_argument(
@@ -1197,13 +1197,13 @@ if __name__ == '__main__':
   parser.add_argument(
       '--output_labels',
       type=str,
-      default='/tmp/output_labels.txt',
+      default='./output_labels.txt',
       help='Where to save the trained graph\'s labels.'
   )
   parser.add_argument(
       '--summaries_dir',
       type=str,
-      default='/tmp/retrain_logs',
+      default='./retrain_logs',
       help='Where to save summary logs for TensorBoard.'
   )
   parser.add_argument(
@@ -1277,7 +1277,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--bottleneck_dir',
       type=str,
-      default='/tmp/bottleneck',
+      default='./bottleneck',
       help='Path to cache bottleneck layer values as files.'
   )
   parser.add_argument(
@@ -1335,7 +1335,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--saved_model_dir',
       type=str,
-      default='',
+      default='./retrain_model',
       help='Where to save the exported graph.')
   parser.add_argument(
       '--logging_verbosity',
@@ -1346,7 +1346,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--checkpoint_path',
       type=str,
-      default='/tmp/_retrain_checkpoint',
+      default='./checkpoints/retrain_checkpoint',
       help='Where to save checkpoint files.'
   )
   FLAGS, unparsed = parser.parse_known_args()
