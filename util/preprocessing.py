@@ -25,16 +25,17 @@ def splitTrainValTest(dataset_dir):
             for img in images:
                 if num_moved_images < 2500:
                     print("Moving Images to Train in progress -->", num_moved_images)
-                    call(['mv',img, dataset_dir+"/dataset/train/"+dir])
-                    num_moved_images+=1
+                    call(['cp',img, dataset_dir+"/dataset/train/"+dir])
+                    
                 elif num_moved_images < 2500+200:
                     print("Moving Images to Validation in progress -->", num_moved_images)
-                    call(['mv',img, dataset_dir+"/dataset/val/"+dir])
-                    num_moved_images+=1
+                    call(['cp',img, dataset_dir+"/dataset/val/"+dir])
+                    
                 else:
                     print("Moving Images to Test in progress -->", num_moved_images)
-                    call(['mv',img, dataset_dir+"/dataset/test/"+dir])
-                    num_moved_images+=1
+                    call(['cp',img, dataset_dir+"/dataset/test/"+dir])
+                
+                num_moved_images+=1
                     
             
 if __name__ == "__main__":
