@@ -1,6 +1,8 @@
 from CNN import model as model
 from util import dataLoader
 from tensorflow.keras import models as keras_model
+from tensorflow import keras as keras
+import tensorflow_hub as hub
 
 import numpy as np
 import options
@@ -63,17 +65,48 @@ def test(args):
 
     print(predictions, predicted_class_indices)
 
+#use Pre Trained MOdels for Fine Tuning
+def usePreTrain(args):
+    # Generate Data Loader
+    dataloader = dataLoader.DataLoader(args)
+    train_data_gen, val_data_gen = dataloader.dataGenerator()
+
+    #model_name = (args.pre_trained_model_name, args.img_h) #@param ["(\"mobilenet_v2\", 224)", "(\"inception_v3\", 299)"] {type:"raw", allow-input: true}
+    model_url = "https://tfhub.dev/google/tf2-preview/{}/feature_vector/4".format(args.pre_trained_model_name)
+
+    do_fine_tuning = not args.freeze_feature_layers
+    print(do_fine_tuning)
+    
+    print("Building model with", model_url)
+    model = keras.Sequential([
+                    hub.KerasLayer(model_url, trainable=do_fine_tuning),
+                    keras.layers.Dropout(rate=0.2),
+                    keras.layers.Dense(train_data_gen.num_classes, activation='softmax',
+                                        kernel_regularizer=keras.regularizers.l2(0.0001))
+                ])
+    model.build((None,)+(args.img_h, args.img_w)+(3,))
+    model.summary()
+
+    #Compile the model for training
+    model.compile(optimizer=keras.optimizers.SGD(lr=0.005, momentum=0.9), 
+                    loss=keras.losses.CategoricalCrossentropy(label_smoothing=0.1), metrics=['accuracy'])
+    
+
+
 if __name__ == "__main__":
     args = options.parseArguments()
+    if args.usePretrain == True:
+        usePreTrain(args)
     
-    if args.mode=="train":
-        train(args)
-
-    elif args.mode=="continueTrain":
-        continueTrain(args)
-
-    elif args.mode=="test":
-        test(args)
-
     else:
-        raise NotImplementedError
+        if args.mode=="train":
+            train(args)
+
+        elif args.mode=="continueTrain":
+            continueTrain(args)
+
+        elif args.mode=="test":
+            test(args)
+
+        else:
+            raise NotImplementedError

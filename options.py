@@ -6,12 +6,9 @@ def parseArguments():
 
     # Boolean to utilize  PreTrained Networks from tf-Hub
     parser.add_argument('--usePreTrain', help='Enable the flag if you want to use pre trained Networks!', action="store_true")
-    parser.add_argument('pre_trained_model_name', help='Name of the pretrained model to be used, defaults to Inception v3', type=str, 
+    parser.add_argument('--pre_trained_model_name', help='Name of the pretrained model to be used, defaults to Inception v3', type=str, 
                                 default="inception_v3")
-    #Only if name is None                                
-    parser.add_argument('pre_trained_model_url', help='URL of the pretrained model to be used, defaults to Inception v3, this can also replaced dynamically with the name above', type=str, 
-                                default="https://tfhub.dev/google/tf2-preview/{}/feature_vector/4".format("inception_v3"))
-
+    parser.add_argument('--freeze_feature_layers', help='Option to use the model as bottleneck or FeatureExtractor', action='store_true')
 
     # Load the model for training testing or to continue the training from a specific checkpoint!
     parser.add_argument('--mode', help='train/continueTrain/test modes', default="train", type=str)
