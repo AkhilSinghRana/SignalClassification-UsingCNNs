@@ -11,3 +11,4 @@ models/*
 
 # Remove all dataset Images
 Datasets/*
+/bottlenecks
