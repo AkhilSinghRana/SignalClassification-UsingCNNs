@@ -74,3 +74,6 @@ if __name__ == "__main__":
 
     elif args.mode=="test":
         test(args)
+
+    else:
+        raise NotImplementedError
