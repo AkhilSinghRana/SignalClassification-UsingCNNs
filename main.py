@@ -54,16 +54,10 @@ def test(args):
     dataloader = dataLoader.DataLoader(args)
     test_data_gen = dataloader.dataGenerator()
 
-    # Load and continue training from the saved model
-    print("Loading model")
-    loaded_model = keras_model.load_model(args.load_dir)
+    #if use PreTrain flag is enabled
+    if args.usePreTrain:
+        reloaded = tf.keras.experimental.load_from_saved_model(args.load_dir, custom_objects={'KerasLayer':hub.KerasLayer})
 
-    #Predict from the model
-    predictions = loaded_model.predict_generator(test_data_gen, steps = test_data_gen.n // args.batch_size, verbose=1)
-    
-    predicted_class_indices = np.argmax(predictions, axis=1)
-
-    print(predictions, predicted_class_indices)
 
 #use Pre Trained MOdels for Fine Tuning
 def usePreTrain(args):
@@ -74,28 +68,37 @@ def usePreTrain(args):
     #model_name = (args.pre_trained_model_name, args.img_h) #@param ["(\"mobilenet_v2\", 224)", "(\"inception_v3\", 299)"] {type:"raw", allow-input: true}
     model_url = "https://tfhub.dev/google/tf2-preview/{}/feature_vector/4".format(args.pre_trained_model_name)
 
+
     do_fine_tuning = not args.freeze_feature_layers
-    print(do_fine_tuning)
+    print("Do Fine Tuning of feature layers : ",do_fine_tuning)
     
+
+    feature_extractor_layer = hub.KerasLayer(model_url,
+                                         input_shape=(args.img_h, args.img_w,3), trainable=do_fine_tuning)
     print("Building model with", model_url)
     model = keras.Sequential([
-                    hub.KerasLayer(model_url, trainable=do_fine_tuning),
+                    feature_extractor_layer,
                     keras.layers.Dropout(rate=0.2),
                     keras.layers.Dense(train_data_gen.num_classes, activation='softmax',
                                         kernel_regularizer=keras.regularizers.l2(0.0001))
                 ])
-    model.build((None,)+(args.img_h, args.img_w)+(3,))
     model.summary()
 
     #Compile the model for training
     model.compile(optimizer=keras.optimizers.SGD(lr=0.005, momentum=0.9), 
                     loss=keras.losses.CategoricalCrossentropy(label_smoothing=0.1), metrics=['accuracy'])
     
+    history = model.fit(train_data_gen, epochs=2,
+                steps_per_epoch= dataloader.num_train_images // args.batch_size)
+    
+    keras.experimental.export_saved_model(model, args.save_dir)
+
+    
 
 
 if __name__ == "__main__":
     args = options.parseArguments()
-    if args.usePretrain == True:
+    if args.usePreTrain:
         usePreTrain(args)
     
     else:
