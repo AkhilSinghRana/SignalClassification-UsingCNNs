@@ -8,6 +8,10 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 import tensorflow.keras.layers as layers # import Keras Layers
 import tensorflow.keras.optimizers as optimizers
+import tensorflow.keras as keras
+
+# Import Tensorflow_hub for using pre trained models
+import tensorflow_hub as hub
 
 #Load data generator and preprocessing module
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -18,7 +22,7 @@ import os
 #import other modules
 import numpy as np
 
-class CNN_model():
+class Generate_model():
     
     # Initialize the class, with some default variables
     def __init__(self, args=None, num_classes=0):
@@ -110,4 +114,41 @@ class CNN_model():
         # Generate the model Summary
         print("Model Details!")
         model.summary()
+        return model
+
+    def preTrainedModel(self):
+        #model_name = (args.pre_trained_model_name, args.img_h) #@param ["(\"mobilenet_v2\", 224)", "(\"inception_v3\", 299)"] {type:"raw", allow-input: true}
+        model_url = "https://tfhub.dev/google/tf2-preview/{}/feature_vector/4".format(self.args.pre_trained_model_name)
+
+
+        do_fine_tuning = not self.args.freeze_feature_layers
+        print("Do Fine Tuning of feature layers : ",do_fine_tuning)
+        
+
+        feature_extractor_layer = hub.KerasLayer(model_url,
+                                            input_shape=(self.args.img_h, self.args.img_w,3), trainable=do_fine_tuning)
+        print("Building model from --> ", model_url)
+        model = keras.Sequential([
+
+                        feature_extractor_layer,
+                        keras.layers.Dropout(rate=0.2),
+                        keras.layers.Dense(self.num_classes, activation='softmax',
+                                            kernel_regularizer=keras.regularizers.l2(0.0001))
+                    ])
+
+        # Generate Model Summary
+        model.summary()
+        
+        #Compile the model for training
+        print("Using {} Optimizer for training".format(self.args.optimizer))
+        if self.args.optimizer=="RMS":
+            model.compile(optimizers.RMSprop(lr=0.0005, decay=1e-6),loss=keras.losses.CategoricalCrossentropy(label_smoothing=0.1),metrics=["accuracy"])
+        elif self.args.optimizer=="Adam":
+            model.compile(optimizer='adam', loss=keras.losses.CategoricalCrossentropy(label_smoothing=0.1), metrics=['accuracy'])
+        elif self.args.optimizer=="SGD":
+            model.compile(optimizer=keras.optimizers.SGD(lr=0.005, momentum=0.9), 
+                            loss=keras.losses.CategoricalCrossentropy(label_smoothing=0.1), metrics=['accuracy'])
+        else:
+            raise NotImplementedError
+        
         return model
