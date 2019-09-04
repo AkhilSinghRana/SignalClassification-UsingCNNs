@@ -4,16 +4,17 @@ def parseArguments():
     # Creates argument parser
     parser = argparse.ArgumentParser()
 
-    # Boolean to utilize  PreTrained Networks from tf-Hub
-    parser.add_argument('--usePreTrain', help='Enable the flag if you want to use pre trained Networks!', action="store_true")
-    parser.add_argument('--pre_trained_model_name', help='Name of the pretrained model to be used, defaults to Inception v3', type=str, 
-                                default="inception_v3")
-    parser.add_argument('--freeze_feature_layers', help='Option to use the model as bottleneck or FeatureExtractor', action='store_true')
 
     # Load the model for training testing or to continue the training from a specific checkpoint!
     parser.add_argument('--mode', help='train/continueTrain/test modes', default="train", type=str)
-
-
+    
+    parser.add_argument('--pre_trained_model_name', help='Name of the pretrained model to be used, defaults to Inception v3', type=str, 
+                                default="inception_v3")
+    parser.add_argument('--model_url', help='url of the model to use for pre-training', type=str, 
+                                default="https://tfhub.dev/google/tf2-preview/inception_v3/feature_vector/4")
+    
+    parser.add_argument('--freeze_feature_layers', help='Option to use the model as bottleneck or FeatureExtractor', action='store_true')
+   
     # Path to the dataset Directory. It should have the below Folder Structure
 
     ################# Folder Structure:###########
@@ -54,7 +55,7 @@ def parseArguments():
     parser.add_argument('-b', '--batch_size', help='Batch Size for training', type=int, default=1)
     parser.add_argument('--num_epochs', help='Number of Epochs to train the model for', type=int, default= 100)
     parser.add_argument('--early_stop', help='EarlyStopping, to avoid Overfitting duting training ', action='store_true')
-    parser.add_argument('--optimizer', help="Optimizer to Choose RMS or Adam", default="RMS", type=str)
+    parser.add_argument('--optimizer', help="Optimizer to Choose RMS or Adam", default="SGD", type=str)
 
     args = parser.parse_args()
     return args
