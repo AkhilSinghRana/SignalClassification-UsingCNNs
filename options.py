@@ -38,7 +38,7 @@ def parseArguments():
     #           |-- Class E
     ###############################################
 
-    parser.add_argument('--input_dir', help='Path to the Dataset directory(DIR)', required=True)
+    parser.add_argument('--input_dir', help='Path to the Dataset directory(DIR)', default='./', type=str)
 
     # Tensorflow Graph,Session,model based parametes
     parser.add_argument('--save_dir', help='Path to save the trained Models', default='./models')
