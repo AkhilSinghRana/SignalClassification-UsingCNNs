@@ -1,5 +1,6 @@
 import os, glob
 from tensorflow.keras.preprocessing import image as image_preprocessing
+
 class DataLoader():
     def __init__(self, args=None):
         print("Initializing DataLoader ...")
@@ -15,7 +16,7 @@ class DataLoader():
             raise NotADirectoryError
         
         else:
-            if self.args.mode == "train" or self.args.mode == "continueTrain":
+            if self.args.mode == "train" or self.args.mode == "continueTrain" or self.args.mode == "usePreTrain":
                 train_dir = os.path.join(self.args.input_dir, "train")
                 val_dir = os.path.join(self.args.input_dir, "val")
                 if not (os.path.exists(train_dir) or os.path.exists(val_dir)):
