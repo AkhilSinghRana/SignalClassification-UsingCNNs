@@ -81,5 +81,5 @@ Results for testing on 2 different classes (ChirpJammer and NarrowBandSignal) is
 
 Results for testing on 4 different classes (ChirpJammer, NarrowBandSignal, ChirpUnknown, Interference Signals) is shown in the fig below ![Accuracy: 95.4 % ](Results/fig2.png) 
 
-You can also visualize the training curve(shown in train_models notebook). ![Accuracy Plot: 4Classes Training](training_acc_plot.png) ![Loss Plot: 4Classes Training](training_loss_plot.png)
+You can also visualize the training curve(shown in train_models notebook). ![Accuracy Plot: 4Classes Training](Results/training_acc_plot.png) ![Loss Plot: 4Classes Training](Results/training_loss_plot.png)
 
