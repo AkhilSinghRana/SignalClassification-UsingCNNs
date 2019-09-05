@@ -38,7 +38,7 @@ You are now ready to open the jupyter notebook for training and testing the pre 
 
 #### 2. Train on your own Dataset:
 
-Instructions for training on your own Dataset is shown in the notebook below. You have 2 options, you can either train a CNN model from scratch if you have enough training data per class! If not the repository provides you to use Pre-Trained Feature extractors for extractind complex features, and building a classifier head on top of this extracted features. You also have an option for fine-tuning the feature extractor. The feature extractors are downloaded from tensorflow-hub --> https://www.tensorflow.org/hub
+Instructions for training on your own Dataset is shown in the notebook below. You have 2 options, you can either train a CNN model from scratch if you have enough training data per class! If not the repository provides you to use Pre-Trained Feature extractors for extractind complex features, and building a classifier head on top of this extracted features. You also have an option for fine-tuning the feature extractor. The feature extractors are downloaded from tensorflow-hub --> https://www.tensorflow.org/hub.
 
 Jupyter Notebook:
 
@@ -71,7 +71,6 @@ Running from a Terminal:
          pre_train_model_name = inception_v3/anytfhub_module 
          input_dir = directory containing train, test and val folders
  
-
 
 ### Results
 
