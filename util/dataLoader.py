@@ -45,7 +45,7 @@ class DataLoader():
                                                                          target_size = (self.args.img_h,self.args.img_w),
                                                                          color_mode = "rgb",
                                                                          batch_size = self.args.batch_size,
-                                                                         shuffle=False,
+                                                                         shuffle=True,
                                                                          interpolation = "bicubic",
                                                                          class_mode = "categorical"
                                                     )
@@ -54,7 +54,7 @@ class DataLoader():
                                                                          target_size = (self.args.img_h,self.args.img_w),
                                                                          color_mode = "rgb",
                                                                          batch_size = self.args.batch_size,
-                                                                         shuffle=False,
+                                                                         shuffle=True,
                                                                          interpolation = "bicubic",
                                                                          class_mode = "categorical"
                                                     )
