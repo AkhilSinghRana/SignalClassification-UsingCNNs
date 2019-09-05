@@ -10,11 +10,13 @@ You need to preprocess, the signals to generate an image representation of it ei
 
 ### Results
 
-Since I did not had enough training data per class, I found using pre-trained model as a feature extractor works really good for me.
+Since I did not had enough training data per class, I found using pre-trained model as a feature extractor works really good for me. 
+Accuracy achieved for training on 2 classes(2500 training sample per class) --> 99.9%
+Accuracy achieved for training with 4 classes(Unbalanced training sample min:1500 images per class) --> 95.4%
 
-Results for testing on 2 different classes (ChirpJammer and NarrowBandSignal) is shown in fig below ![Accuracy:99.9 % ](Results/fig1.png) 
+Results for testing on 2 different classes (ChirpJammer and NarrowBandSignal) is shown in fig below ![Results](Results/fig1.png) 
 
-Results for testing on 4 different classes (ChirpJammer, NarrowBandSignal, ChirpUnknown, Interference Signals) is shown in the fig below ![Accuracy: 95.4 % ](Results/fig2.png) 
+Results for testing on 4 different classes (ChirpJammer, NarrowBandSignal, ChirpUnknown, Interference Signals) is shown in the fig below ![Results](Results/fig2.png) 
 
 You can also visualize the training curve(shown in train_models notebook). 
 
