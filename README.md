@@ -8,6 +8,20 @@ This project was started as an internal project from within Airbus Defence and S
 
 You need to preprocess, the signals to generate an image representation of it either using FFT or MFCC or any other signal pre-processing algorithms. <b> Librosa </b>, --> https://librosa.github.io/librosa/ provides a nice environment to do signal processing with python.
 
+### Results
+
+Since I did not had enough training data per class, I found using pre-trained model as a feature extractor works really good for me.
+
+Results for testing on 2 different classes (ChirpJammer and NarrowBandSignal) is shown in fig below ![Accuracy:99.9 % ](Results/fig1.png) 
+
+Results for testing on 4 different classes (ChirpJammer, NarrowBandSignal, ChirpUnknown, Interference Signals) is shown in the fig below ![Accuracy: 95.4 % ](Results/fig2.png) 
+
+You can also visualize the training curve(shown in train_models notebook). 
+
+| Accuracy Plot  | Loss Plot |
+|----------------|------------|
+|![Accuracy Plot: 4Classes Training](Results/training_acc_plot.png) | ![Loss Plot: 4Classes Training](Results/training_loss_plot.png) |
+
 
 ### Setup Instructions:
 #### 1. Requirements
@@ -71,14 +85,4 @@ Running from a Terminal:
          pre_train_model_name = inception_v3/anytfhub_module 
          input_dir = directory containing train, test and val folders
  
-
-### Results
-
-Since I did not had enough training data per class, I found using pre-trained model as a feature extractor works really good for me.
-
-Results for testing on 2 different classes (ChirpJammer and NarrowBandSignal) is shown in fig below ![Accuracy:99.9 % ](Results/fig1.png) 
-
-Results for testing on 4 different classes (ChirpJammer, NarrowBandSignal, ChirpUnknown, Interference Signals) is shown in the fig below ![Accuracy: 95.4 % ](Results/fig2.png) 
-
-You can also visualize the training curve(shown in train_models notebook). ![Accuracy Plot: 4Classes Training](Results/training_acc_plot.png) ![Loss Plot: 4Classes Training](Results/training_loss_plot.png)
 
