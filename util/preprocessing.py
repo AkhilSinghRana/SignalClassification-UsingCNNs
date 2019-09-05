@@ -23,14 +23,15 @@ def splitTrainValTest(dataset_dir):
             random.shuffle(images)
             num_moved_images=0
             for img in images:
-                if num_moved_images < 2500:
+                if num_moved_images < 1300:
                     print("Moving Images to Train in progress -->", num_moved_images)
                     call(['cp',img, dataset_dir+"/dataset/train/"+dir])
                     
-                elif num_moved_images < 2500+200:
-                    print("Moving Images to Validation in progress -->", num_moved_images)
-                    call(['cp',img, dataset_dir+"/dataset/val/"+dir])
-                    
+                    #Uncomment to create validations set
+                    """elif num_moved_images < 2500+200:
+                        print("Moving Images to Validation in progress -->", num_moved_images)
+                        call(['cp',img, dataset_dir+"/dataset/val/"+dir])
+                    """    
                 else:
                     print("Moving Images to Test in progress -->", num_moved_images)
                     call(['cp',img, dataset_dir+"/dataset/test/"+dir])
