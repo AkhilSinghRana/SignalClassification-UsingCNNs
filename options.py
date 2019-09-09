@@ -15,7 +15,7 @@ def parseArguments():
     
     parser.add_argument('--freeze_feature_layers', help='Option to use the model as bottleneck or FeatureExtractor', action='store_true')
    
-    # Path to the dataset Directory. It should have the below Folder Structure
+    # Path to the dataset Directory. It should have the below Folder Structure, if not have a look at preprocessing.py file provided in util folder
 
     ################# Folder Structure:###########
     #    DIR:

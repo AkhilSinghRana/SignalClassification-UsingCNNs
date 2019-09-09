@@ -4,3 +4,5 @@ numpy
 pillow
 scipy
 matplotlib
+scikit-image
+simpleITK
