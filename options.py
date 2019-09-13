@@ -40,6 +40,8 @@ def parseArguments():
     ###############################################
 
     parser.add_argument('--input_dir', help='Path to the Dataset directory(DIR)', default='./', type=str)
+    parser.add_argument('--output_dir', help='Path to save the preprocesed Dataset directory(DIR)', default='./', type=str)
+
 
     # Tensorflow Graph,Session,model based parametes
     parser.add_argument('--save_dir', help='Path to save the trained Models', default='./models')
@@ -49,8 +51,8 @@ def parseArguments():
 
 
     # Training Parameters
-    parser.add_argument('--img_h', help='Image Height', type=int, default=512)
-    parser.add_argument('--img_w', help='Image width', type=int, default=512)
+    parser.add_argument('--img_h', help='Image Height', type=int, default=256)
+    parser.add_argument('--img_w', help='Image width', type=int, default=256)
     parser.add_argument('--num_channels', help='Image Channels (1 or 3) defaults to 3', type=int, default=3)
     parser.add_argument('-b', '--batch_size', help='Batch Size for training', type=int, default=1)
     parser.add_argument('--num_epochs', help='Number of Epochs to train the model for', type=int, default= 100)
