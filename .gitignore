@@ -13,3 +13,5 @@ models/*
 Datasets/*
 /bottlenecks
 /training_summaries
+
+*_checkpoints/
