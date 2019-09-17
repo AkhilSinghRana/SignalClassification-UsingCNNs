@@ -1,4 +1,4 @@
-# Jammer Classification
+# Signal Classification
 
 This project aims to provide a setup for Signal Classification/Detection of different Signal Spectogram signatures!
 
